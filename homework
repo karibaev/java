@@ -1,0 +1,74 @@
+package com.company;
+
+class MyMaxHeap {
+    int[] array;
+    int curSize;
+    int maxSize;
+
+    public MyMaxHeap(int maxSize) {
+        this.maxSize = maxSize;
+        this.curSize = 0;
+        array = new int[maxSize + 1];
+        array[0] = 999999999; // very first node
+    }
+
+    boolean isLeaf(int ind){
+        return (ind > (curSize / 2) && ind <= curSize);
+    }
+
+    void insert(int item){
+        array[++curSize] = item;
+        int current = curSize;
+        while(array[current] > array[current / 2]){
+            int temp = array[current];
+            array[current] = array[current / 2];
+            array[current / 2] = temp;
+
+            current = current / 2;
+        }
+    }
+
+    void Heapify(int ind){
+        if(isLeaf(ind)){
+            return;
+        }
+        if(array[ind] < array[ind * 2] || array[ind] < array[(ind * 2) + 1]){
+            int temp = array[ind];
+            if(array[ind * 2] > array[(ind * 2) + 1]){
+                array[ind] = array[ind * 2];
+                array[ind * 2] = temp;
+                Heapify(ind * 2);
+            } else {
+                array[ind] = array[(ind * 2) + 1];
+                array[(ind * 2) + 1] = temp;
+                Heapify((ind * 2) + 1);
+            }
+        }
+    }
+
+    int extractMax(){
+        int temp = array[1];
+        array[1] = array[curSize--];
+        Heapify(1);
+        return temp;
+    }
+
+    int getMax(){
+        return array[1] ;
+    }
+    boolean empty(){
+        return (curSize == 0);
+    }
+
+    int size(){
+        return this.curSize;
+    }
+
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+    }
+}
