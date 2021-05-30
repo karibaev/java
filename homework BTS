@@ -1,0 +1,74 @@
+package com.company;
+
+public class BST {
+    class Node {
+        int key;
+        Node left;
+        Node right;
+
+        public Node(int key) {
+            this.key = key;
+            left = null;
+            right = null;
+        }
+    }
+
+    Node root;
+
+    BST(){
+        root = null;
+    }
+
+    void insert(int key){
+        root = insertREC(root, key);
+    }
+
+    private Node insertREC(Node root, int key){
+        if(root == null){
+            root = new Node(key);
+            return root;
+        }
+        if(key < root.key){
+            root.left = insertREC(root.left, key);
+        } else {
+            root.right = insertREC(root.right, key);
+        }
+        return root;
+    }
+
+    void inorder(){
+        inorderREC(root);
+    }
+
+    private void inorderREC(Node root){
+        if(root != null){
+            inorderREC(root.left);
+            System.out.print(root.key + " ");
+            inorderREC(root.right);
+        }
+    }
+
+    boolean find(int value){
+        Node ans = findREC(root, value);
+        if(ans == null){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    Node findREC(node root, int value){
+        if(root == null){
+            return null;
+        }
+        if(root.key == value){
+            return root;
+        }
+        if(value < root.key){
+            return findREC(root.left, value);
+        }
+        return findRec(root.right, value);
+    }
+
+
+}
