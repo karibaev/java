@@ -1,0 +1,78 @@
+package com.company;
+
+
+
+class HashTable{
+
+    class node {
+        String key;
+        int value;
+        node next;
+
+        public node(String key, int value) {
+            this.key = key;
+            this.value = value;
+            next = null;
+        }
+    }
+
+    class LinkedList {
+        node head;
+
+        LinkedList(){
+            head = null;
+        }
+
+        public void push_front(node newNode){
+            if(head == null){
+                head = newNode;
+            } else {
+                node temp = head;
+                head = newNode;
+                head.next = temp;
+            }
+        }
+
+        public int get(String key){
+            node cur = head;
+            while(cur != null){
+                if(cur.key.equals(key)){
+                    return cur.value;
+                }
+                cur = cur.next;
+            }
+            return -1;
+        }
+    }
+
+    LinkedList[] a;
+    int size;
+
+    HashTable(int size){
+        this.size = size;
+        a = new LinkedList[size];
+        for(int i = 0; i < size; i++){
+            a[i] = new LinkedList();
+        }
+    }
+
+    public int h(String data){
+        int hash = 0;
+        for(int i = 0; i < data.length(); i++){
+            hash += data.charAt(i);
+        }
+        return hash % size;
+    }
+
+    public void insert(String key, int value){
+        int ind = h(key);
+        a[ind].push_front(new node(key, value));
+    }
+
+    public int get(String key){
+        int ind = h(key);
+        return a[ind].get(key);
+    }
+
+}
+
