@@ -1,0 +1,38 @@
+package com.company;
+
+
+  //Definition for a binary tree node.
+  class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode() {}
+      TreeNode(int val) { this.val = val; }
+      TreeNode(int val, TreeNode left, TreeNode right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+ }
+
+class Solution {
+    int Height(TreeNode cur, int height){
+        if(cur == null){
+            return height - 1;
+        }
+        return Math.max(Height(cur.left, height + 1), Height(cur.right, height + 1));
+    }
+    int get(TreeNode cur, int curHeight, int height){
+        if(cur == null){
+            return 0;
+        }
+        if(curHeight == height){
+            return cur.val;
+        }
+        return get(cur.left, curHeight + 1, height) + get(cur.right, curHeight + 1, height);
+    }
+
+    public int deepestLeavesSum(TreeNode root){
+        return get(root, 0, Height(root, 0));
+    }
+}
